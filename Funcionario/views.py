@@ -2,4 +2,4 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse("Rota acessada: Funcionários, teste sem maine")
+    return HttpResponse("Rota acessada: Funcionários")
