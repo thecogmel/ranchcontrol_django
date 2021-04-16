@@ -7,4 +7,4 @@ class Funcionario(models.Model):
   id_funcionario = models.PositiveIntegerField()
 
   def __str__(self):
-    return self.nome;
+    return self.nome + " - " + self.funcao;
