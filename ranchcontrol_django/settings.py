@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'Funcionario',
 ]
 
 MIDDLEWARE = [
@@ -80,7 +81,7 @@ DATABASES = {
     #}
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'setor_compras',
+        'NAME': 'ranch_mysql',
         'USER': 'erick',
         'PASSWORD': 'memphis2108',
         'HOST': 'localhost',
