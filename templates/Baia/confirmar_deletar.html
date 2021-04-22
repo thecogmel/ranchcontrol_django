@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Confirmação remoção
+{% endblock %}
+
+{% block titulo_pagina %}
+Você tem certeza que deseja remover esta baia?
+{% endblock %}
+
+{% block conteudo %}
+
+    <form method="post">
+        {% csrf_token %}
+        <p><strong>Nome: </strong> {{baia.nome_baia}} </p>
+        <p><strong>Capacidade: </strong> {{baia.capacidade}} </p>
+        <p><strong>Definicao: </strong> {{baia.definicao}} </p>
+        <input type="submit" value="Confirmar">
+    </form>
+
+{% endblock %}

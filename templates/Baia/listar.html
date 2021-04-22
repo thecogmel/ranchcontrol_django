@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Listar Baias
+{% endblock %}
+
+{% block titulo_pagina %}
+Baias
+{% endblock %}
+
+{% block conteudo %}
+
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if baias %}
+    <ul>
+        {% for baia in baias %}
+            <li>
+                <strong>{{baia.id}}: {{ baia.nome_baia }}</strong>
+                <a href="#" style="text-decoration:none">
+                    <i class="fas fa-search" style="color:blue"></i>
+                </a>
+                <a href="{% url 'baias:editar' pk=baia.id %}" style="text-decoration:none">
+                  <i class="fas fa-pencil" style="color:green"></i>
+                </a>
+                <a href="{% url 'baias:deletar' pk=baia.id %}" style="text-decoration:none">
+                  <i class="fas fa-trash" style="color:red"></i>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>Não há produtos cadastrados.</p>
+    {% endif %}
+{% endblock %}
