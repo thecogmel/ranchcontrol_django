@@ -67,7 +67,7 @@ def deletar_funcionario(request, pk):
 
         # Se o tamanho desta lista for 0, não foram encontrados pedidos com este produto.
         # Pode deletar
-        if len(resultado) != 0:
+        if len(resultado) == 0:
             with connection.cursor() as cursor:
                 cursor.execute("DELETE FROM Baias_baias_Funcionarios WHERE funcionario_id=%s", [pk])
                 cursor.execute("DELETE FROM Funcionario_funcionario WHERE id=%s", [pk])
