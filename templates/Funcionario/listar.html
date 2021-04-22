@@ -26,11 +26,11 @@ Funcionarios
                 <a href="#" style="text-decoration:none">
                     <i class="fas fa-search" style="color:blue"></i>
                 </a>
-                <a href="#" style="text-decoration:none">
+                <a href="{% url 'funcionario:editar' pk=funcionario.id %}" style="text-decoration:none">
                     <i class="fas fa-pencil" style="color:green"></i>
                 </a>
-                <a href="#" style="text-decoration:none">
-                    <i class="fas fa-trash" style="color:red"></i>
+                <a href="{% url 'funcionario:deletar' pk=funcionario.id %}" style="text-decoration:none">
+                  <i class="fas fa-trash" style="color:red"></i>
                 </a>
             </li>
         {% endfor %}
