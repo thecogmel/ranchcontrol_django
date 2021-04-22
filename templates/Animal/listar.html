@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Listar Animais
+{% endblock %}
+
+{% block titulo_pagina %}
+Animais
+{% endblock %}
+
+{% block conteudo %}
+
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if animais %}
+    <ul>
+        {% for animal in animais %}
+            <li>
+                <strong>{{animal.id}}: {{ animal.nome_animal }}</strong>
+                <a href="#" style="text-decoration:none">
+                    <i class="fas fa-search" style="color:blue"></i>
+                </a>
+                <a href="{% url 'animal:editar' pk=animal.id %}" style="text-decoration:none">
+                    <i class="fas fa-pencil" style="color:green"></i>
+                </a>
+                <a href="{% url 'animal:deletar' pk=animal.id %}" style="text-decoration:none">
+                  <i class="fas fa-trash" style="color:red"></i>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>Não há produtos cadastrados.</p>
+    {% endif %}
+{% endblock %}

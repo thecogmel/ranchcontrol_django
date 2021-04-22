@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Confirmação remoção
+{% endblock %}
+
+{% block titulo_pagina %}
+Você tem certeza que deseja remover este funcionario?
+{% endblock %}
+
+{% block conteudo %}
+
+    <form method="post">
+        {% csrf_token %}
+        <p><strong>Nome: </strong> {{funcionario.nome}} </p>
+        <p><strong>Descrição: </strong> {{funcionario.funcao}} </p>
+        <input type="submit" value="Confirmar">
+    </form>
+
+{% endblock %}
