@@ -13,25 +13,24 @@ Animais
     {% if messages %}
         <ul>
             {% for message in messages %}
-                <li>{{ message }}</li>
+                <li class="alert alert-warning">{{ message }}</li>
             {% endfor %}
         </ul>
     {% endif %}
 
     {% if animais %}
-    <ul>
+    <ul class="list-group div35">
         {% for animal in animais %}
-            <li>
+            <li class="list-group-item">
                 <strong>{{animal.id}}: {{ animal.nome_animal }}</strong>
-                <a href="#" style="text-decoration:none">
-                    <i class="fas fa-search" style="color:blue"></i>
-                </a>
-                <a href="{% url 'animal:editar' pk=animal.id %}" style="text-decoration:none">
-                    <i class="fas fa-pencil" style="color:green"></i>
-                </a>
-                <a href="{% url 'animal:deletar' pk=animal.id %}" style="text-decoration:none">
-                  <i class="fas fa-trash" style="color:red"></i>
-                </a>
+                <span class="span"></span>
+                  <a href="{% url 'animal:editar' pk=animal.id %}" style="text-decoration:none">
+                    <i class="fas fa-pencil" style="color:#F2BE24"></i>
+                  </a>
+                  <a href="{% url 'animal:deletar' pk=animal.id %}" style="text-decoration:none">
+                    <i class="fas fa-trash" style="color: var(--main-red)"></i>
+                  </a>
+                </span>
             </li>
         {% endfor %}
     </ul>

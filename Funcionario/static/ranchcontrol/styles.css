@@ -1,0 +1,26 @@
+:root {
+  --main-bg-color: #D7D8C9;
+  --main-yellow: #F2BE23;
+  --main-light-green: #323232;
+  --main-red: #D94C1A;
+  --main-red-hover: #e76e41;
+}
+
+body {
+  background-color: var(--main-bg-color);
+}
+
+.btn-primary {
+  background-color: var(--main-red);
+  border: none;
+}
+.btn-primary:hover {
+  background-color: var(--main-red-hover);
+  border: none;
+}
+.span {
+  float: right;
+}
+.div35{
+  width: 35%;
+}

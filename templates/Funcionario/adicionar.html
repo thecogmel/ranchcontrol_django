@@ -9,11 +9,11 @@ Cadastrar
 {% endblock %}
 
 {% block conteudo %}
-
-    <form method="post">
-        {% csrf_token %}
-        {{form.as_p}}
-        <input type="submit" value="Cadastrar">
-    </form>
-
+    <div class="w-50 formulario">
+      <form method="post">
+          {% csrf_token %}
+          {{form.as_p}}
+          <input type="submit" class="btn btn-primary" value="Cadastrar">
+      </form>
+    </div>
 {% endblock %}

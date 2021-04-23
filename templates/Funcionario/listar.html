@@ -9,33 +9,31 @@ Funcionarios
 {% endblock %}
 
 {% block conteudo %}
+  {% if messages %}
+      <ul>
+          {% for message in messages %}
+              <li class="alert alert-warning">{{ message }}</li>
+          {% endfor %}
+      </ul>
+  {% endif %}
 
-    {% if messages %}
-        <ul>
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-
-    {% if funcionarios %}
-    <ul>
-        {% for funcionario in funcionarios %}
-            <li>
-                <strong>{{funcionario.id}}: {{ funcionario.nome }} - {{ funcionario.funcao }}</strong>
-                <a href="#" style="text-decoration:none">
-                    <i class="fas fa-search" style="color:blue"></i>
-                </a>
-                <a href="{% url 'funcionario:editar' pk=funcionario.id %}" style="text-decoration:none">
-                    <i class="fas fa-pencil" style="color:green"></i>
-                </a>
-                <a href="{% url 'funcionario:deletar' pk=funcionario.id %}" style="text-decoration:none">
-                  <i class="fas fa-trash" style="color:red"></i>
-                </a>
-            </li>
-        {% endfor %}
+  {% if funcionarios %}
+    <ul class="list-group div35">
+      {% for funcionario in funcionarios %}
+      <li class="list-group-item">
+        <strong>{{funcionario.id}}: {{ funcionario.nome }} - {{ funcionario.funcao }}</strong>
+        <span class="span">
+          <a href="{% url 'funcionario:editar' pk=funcionario.id %}" class="mx-2" style="text-decoration:none; text-align: end;">
+            <i class="fas fa-pencil" style="color:#F2BE24"></i>
+          </a>
+          <a href="{% url 'funcionario:deletar' pk=funcionario.id %}" class="mx-2" style="text-decoration:none; text-align: end;">
+            <i class="fas fa-trash" style="color: var(--main-red)"></i>
+          </a>
+        </span>
+      </li>
+      {% endfor %}
     </ul>
-    {% else %}
-    <p>Não há produtos cadastrados.</p>
-    {% endif %}
+  {% else %}
+  <p>Não há produtos cadastrados.</p>
+  {% endif %}
 {% endblock %}
