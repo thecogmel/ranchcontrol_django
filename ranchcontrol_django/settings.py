@@ -137,3 +137,4 @@ STATICFILES_DIRS = [
     '/var/www/static/',
 ]
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+#link gihub: https://github.com/thecogmel/ranchcontrol_django

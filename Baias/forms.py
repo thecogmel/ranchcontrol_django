@@ -10,7 +10,7 @@ from .models import Baias
 class BaiasForm(forms.ModelForm):
     class Meta:
         model = Baias
-        fields = ['nome_baia', 'capacidade', 'definicao' ]
+        fields = ['nome_baia', 'capacidade', 'definicao', 'Funcionarios' ]
 
     def clean(self):
         cleaned_data = super().clean()
@@ -26,7 +26,7 @@ class BaiasForm(forms.ModelForm):
 class UpdateForm(forms.ModelForm):
     class Meta:
         model = Baias
-        fields = ['nome_baia', 'capacidade', 'definicao']
+        fields = ['nome_baia', 'capacidade', 'definicao', 'Funcionarios']
 
     def clean(self):
         cleaned_data = super().clean()

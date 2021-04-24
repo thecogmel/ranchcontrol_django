@@ -55,7 +55,7 @@ def adicionar_baia(request):
 class adicionar_baias_cv(CreateView):
     model = Baias
     template_name = "Baia/adicionar_cv.html"
-    fields = ['nome_baia', 'capacidade', 'definicao']
+    fields = ['nome_baia', 'capacidade', 'definicao', 'Funcionarios' ]
     success_url = reverse_lazy('baias:listar_lv')
 
     def form_valid(self, form):
@@ -138,6 +138,6 @@ def editar_baia(request, pk):
 
 class editar_baia_uv(UpdateView):
     model = Baias
-    fields = ['nome_baia', 'capacidade', 'definicao']
+    fields = ['nome_baia', 'capacidade', 'definicao', 'Funcionarios' ]
     template_name = "Baia/editar_uv.html"
     success_url = reverse_lazy('baias:listar_lv')
