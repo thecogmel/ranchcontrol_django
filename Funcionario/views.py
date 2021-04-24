@@ -3,12 +3,14 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 
-#from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 
 from django.db import connection
 from collections import namedtuple
 
 from django.contrib import messages
+
+from .models import Funcionario
 
 from .forms import FuncionarioForm
 from .forms import UpdateForm
@@ -31,6 +33,12 @@ def listar_funcionarios(request):
     return render(request, 'Funcionario/listar.html',
             {'funcionarios': resultado}
             )
+class listar_funcionarios_lv(ListView):
+    # Indicar o nome do produto que quer ser listado
+    model = Funcionario
+    # Indicar o template que será utilizado
+    template_name = "Funcionario/listar_lv.html"
+    # Nome do objeto no template será "object_list"
 
 def adicionar_funcionarios(request):
     if request.method == 'POST':
@@ -49,6 +57,22 @@ def adicionar_funcionarios(request):
     return render(request, 'Funcionario/adicionar.html',
                 {'form': form}
                 )
+class adicionar_funcionarios_cv(CreateView):
+    # Indicar o nome do produto que quer ser criado
+    model = Funcionario
+    # Indicar o template que será utilizado
+    template_name = "Funcionario/adicionar_cv.html"
+    fields = ['nome', 'funcao']
+    # Página para redirecionamento
+    success_url = reverse_lazy('funcionario:listar_lv')
+
+    def form_valid(self, form):
+        if Funcionario.objects.filter(nome = form.cleaned_data['nome']):
+            messages.add_message(self.request, messages.WARNING,
+                                 "Já existe um funcionario com esse nome.")
+            return self.render_to_response(self.get_context_data(form=form))
+        else:
+            return super(adicionar_funcionarios_cv, self).form_valid(form)                
 
 def deletar_funcionario(request, pk):
     if request.method == 'POST':
@@ -85,6 +109,16 @@ def deletar_funcionario(request, pk):
             resultado = namedtuplefetchall(cursor)
         return render(request, "Funcionario/confirmar_deletar.html", {'funcionario': resultado[0]})
 
+class deletar_funcionario_dv(DeleteView):
+    # Indicar o nome do produto que quer ser deletado
+    model = Funcionario
+    # Indicar o template que será utilizado
+    template_name = "Funcionario/confirmar_deletar_dv.html"
+    # Página para redirecionamento
+    success_url = reverse_lazy('funcionario:listar')
+
+    # Nome do objeto no template será "object"
+
 def editar_funcionario(request, pk):
     if request.method == 'POST':
         form = UpdateForm(request.POST)
@@ -111,3 +145,11 @@ def editar_funcionario(request, pk):
                 {'form': form}
                 )
 
+class editar_funcionario_uv(UpdateView):
+    # Indicar o nome do produto que quer ser editado
+    model = Funcionario
+    fields = ['nome', 'funcao']
+    # Indicar o template que será utilizado
+    template_name = "Funcionario/editar_uv.html"
+    # Página para redirecionamento
+    success_url = reverse_lazy('funcionario:listar')
