@@ -24,23 +24,17 @@ def namedtuplefetchall(cursor):
 
 def listar_animais(request):
     with connection.cursor() as cursor:
-        # Função SQL que se quer executar (SELECT, INSERT, DELETE, UPDATE, ...)
-        # Parâmetros serão passados nos []
         cursor.execute("SELECT * FROM Animal_animal  ORDER BY id", [])
         #resultado = cursor.fetchall()
 
-        # Função que permite acessar os atributos das tuplas da tabela resultante da query
         resultado = namedtuplefetchall(cursor)
     return render(request, 'Animal/listar.html',
                   {'animais': resultado}
                   )
 
 class listar_animais_lv(ListView):
-    # Indicar o nome do produto que quer ser listado
     model = Animal
-    # Indicar o template que será utilizado
     template_name = "Animal/listar_lv.html"
-    # Nome do objeto no template será "object_list"
 
 def adicionar_animais(request):
     if request.method == 'POST':
@@ -65,12 +59,9 @@ def adicionar_animais(request):
                   {'form': form}
                   )
 class adicionar_animal_cv(CreateView):
-    # Indicar o nome do produto que quer ser criado
     model = Animal
-    # Indicar o template que será utilizado
     template_name = "Animal/adicionar_cv.html"
     fields = ['nome_animal', 'idade_animal', 'tipo_animal', 'peso_animal', 'obs', 'baia']
-    # Página para redirecionamento
     success_url = reverse_lazy('animal:listar_lv')
 
     def form_valid(self, form):
@@ -88,14 +79,10 @@ def deletar_animal(request, pk):
     return redirect('animal:listar')
 
 class deletar_animal_dv(DeleteView):
-    # Indicar o nome do produto que quer ser deletado
     model = Animal
-    # Indicar o template que será utilizado
     template_name = "Animal/confirmar_deletar_dv.html"
-    # Página para redirecionamento
     success_url = reverse_lazy('animal:listar_lv')
 
-    # Nome do objeto no template será "object"
 
 def editar_animal(request, pk):
     if request.method == 'POST':
@@ -130,10 +117,7 @@ def editar_animal(request, pk):
                 {'form': form}
                 )
 class editar_animal_uv(UpdateView):
-    # Indicar o nome do produto que quer ser editado
     model = Animal
     fields = ['nome_animal', 'idade_animal', 'tipo_animal', 'peso_animal', 'obs', 'baia']
-    # Indicar o template que será utilizado
     template_name = "Animal/editar_uv.html"
-    # Página para redirecionamento
     success_url = reverse_lazy('animal:listar_lv')

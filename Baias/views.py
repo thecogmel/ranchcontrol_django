@@ -23,22 +23,16 @@ def namedtuplefetchall(cursor):
 
 def listar_baias(request):
     with connection.cursor() as cursor:
-        # Função SQL que se quer executar (SELECT, INSERT, DELETE, UPDATE, ...)
-        # Parâmetros serão passados nos []
         cursor.execute("SELECT * FROM Baias_baias  ORDER BY id", [])
         #resultado = cursor.fetchall()
 
-        # Função que permite acessar os atributos das tuplas da tabela resultante da query
         resultado = namedtuplefetchall(cursor)
     return render(request, 'Baia/listar.html',
                   {'baias': resultado}
                   )
 class listar_baias_lv(ListView):
-    # Indicar o nome do produto que quer ser listado
     model = Baias
-    # Indicar o template que será utilizado
-    template_name = "Baia/listar_lv.html"
-    # Nome do objeto no template será "object_list"                  
+    template_name = "Baia/listar_lv.html"              
 
 def adicionar_baia(request):
     if request.method == 'POST':
@@ -59,12 +53,9 @@ def adicionar_baia(request):
                   {'form': form}
                   )
 class adicionar_baias_cv(CreateView):
-    # Indicar o nome do produto que quer ser criado
     model = Baias
-    # Indicar o template que será utilizado
     template_name = "Baia/adicionar_cv.html"
     fields = ['nome_baia', 'capacidade', 'definicao']
-    # Página para redirecionamento
     success_url = reverse_lazy('baias:listar_lv')
 
     def form_valid(self, form):
@@ -77,31 +68,22 @@ class adicionar_baias_cv(CreateView):
 
 def deletar_baia(request, pk):
     if request.method == 'POST':
-        # Quero realmente deletar
-        # Cliquei no botão 'Confirmar'
-
-        # Encontrar o nome do funcionario de id = 'pk'
         with connection.cursor() as cursor:
             cursor.execute("SELECT * FROM Baias_baias WHERE id=%s", [pk])
             nome_baia = cursor.fetchall()[0][1]
 
-        # Procura elementos de pedidos que possuam o produto em questão (id=pk)
         with connection.cursor() as cursor:
             cursor.execute("SELECT * FROM Baias_baias_Funcionarios WHERE baias_id=%s", [pk])
             resultado_baia_id = cursor.fetchall()
             cursor.execute("SELECT * FROM Animal_animal WHERE baia_id=%s", [pk])
             resultado_animal_baia_id = cursor.fetchall()
 
-        # Se o tamanho desta lista for 0, não foram encontrados pedidos com este produto.
-        # Pode deletar
         if len(resultado_baia_id and resultado_animal_baia_id ) == 0:
             with connection.cursor() as cursor:
                 cursor.execute("DELETE FROM Baias_baias WHERE id=%s", [pk])
             messages.add_message(request, messages.ERROR, 'Baia ' + nome_baia + ' deletado com sucesso.')
             return redirect('baias:listar')
 
-        # Se o ramanho desta lista for > 0, foram encontrados pedidos com este produto.
-        # Não pode deletar
         else:
             if len(resultado_baia_id) > 0:
                 with connection.cursor() as cursor:
@@ -123,14 +105,10 @@ def deletar_baia(request, pk):
             resultado = namedtuplefetchall(cursor)
         return render(request, "Baia/confirmar_deletar.html", {'baia': resultado[0]})
 class deletar_baia_dv(DeleteView):
-    # Indicar o nome do produto que quer ser deletado
     model = Baias
-    # Indicar o template que será utilizado
     template_name = "Baia/confirmar_deletar_dv.html"
-    # Página para redirecionamento
     success_url = reverse_lazy('baias:listar_lv')
-
-    # Nome do objeto no template será "object"        
+ 
 
 def editar_baia(request, pk):
     if request.method == 'POST':
@@ -159,10 +137,7 @@ def editar_baia(request, pk):
                 )
 
 class editar_baia_uv(UpdateView):
-    # Indicar o nome do produto que quer ser editado
     model = Baias
     fields = ['nome_baia', 'capacidade', 'definicao']
-    # Indicar o template que será utilizado
     template_name = "Baia/editar_uv.html"
-    # Página para redirecionamento
     success_url = reverse_lazy('baias:listar_lv')
