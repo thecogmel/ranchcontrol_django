@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Adicionar Animais CV
+{% endblock %}
+
+{% block titulo_pagina %}
+Cadastrar
+{% endblock %}
+
+{% block conteudo %}
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+    </ul>
+    {% endif %}
+    
+    <div class="w-50 formulario">
+        <form method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" class="btn btn-primary" value="Cadastrarr">
+        </form>
+    </div>
+{% endblock %}

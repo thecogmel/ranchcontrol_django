@@ -9,12 +9,13 @@ Você tem certeza que deseja remover este funcionario?
 {% endblock %}
 
 {% block conteudo %}
-
+  <div class="w-25 mt-4">
     <form method="post">
-        {% csrf_token %}
-        <p><strong>Nome: </strong> {{object.nome_animal}} </p>
-        <p><strong>Tipo: </strong> {{object.tipo_animal}} </p>
-        <input type="submit" value="Confirmar">
+      {% csrf_token %}
+      <p><strong>Nome: </strong> {{object.nome_animal}} </p>
+      <p><strong>Tipo: </strong> {{object.tipo_animal}} </p>
+      <input type="submit" class="btn btn-primary" value="Confirmar">
     </form>
+  </div>
 
 {% endblock %}

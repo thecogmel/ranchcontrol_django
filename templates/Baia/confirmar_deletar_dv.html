@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Confirmação remoção
+{% endblock %}
+
+{% block titulo_pagina %}
+Você tem certeza que deseja remover esta baia?
+{% endblock %}
+
+{% block conteudo %}
+  <div class="w-25 mt-4">
+    <form method="post">
+      {% csrf_token %}
+      <p><strong>Nome: </strong> {{object.nome_baia}} </p>
+      <p><strong>Tipo: </strong> {{object.capacidade}} </p>
+      <input type="submit" class="btn btn-primary" value="Confirmar">
+    </form>
+  </div>
+
+{% endblock %}

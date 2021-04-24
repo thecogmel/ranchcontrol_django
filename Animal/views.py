@@ -3,12 +3,14 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 
-#from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 
 from django.db import connection
 from collections import namedtuple
 
 from django.contrib import messages
+
+from .models import Animal
 
 from .forms import AnimalForm
 from .forms import UpdateForm
@@ -33,6 +35,12 @@ def listar_animais(request):
                   {'animais': resultado}
                   )
 
+class listar_animais_lv(ListView):
+    # Indicar o nome do produto que quer ser listado
+    model = Animal
+    # Indicar o template que será utilizado
+    template_name = "Animal/listar_lv.html"
+    # Nome do objeto no template será "object_list"
 
 def adicionar_animais(request):
     if request.method == 'POST':
@@ -56,6 +64,22 @@ def adicionar_animais(request):
     return render(request, 'Animal/adicionar.html',
                   {'form': form}
                   )
+class adicionar_animal_cv(CreateView):
+    # Indicar o nome do produto que quer ser criado
+    model = Animal
+    # Indicar o template que será utilizado
+    template_name = "Animal/adicionar_cv.html"
+    fields = ['nome_animal', 'idade_animal', 'tipo_animal', 'peso_animal', 'obs', 'baia']
+    # Página para redirecionamento
+    success_url = reverse_lazy('animal:listar_lv')
+
+    def form_valid(self, form):
+        if Animal.objects.filter(nome_animal = form.cleaned_data['nome_animal']):
+            messages.add_message(self.request, messages.WARNING,
+                                 "Já foi criado um animal com este nome. Escolha outro nome.")
+            return self.render_to_response(self.get_context_data(form=form))
+        else:
+            return super(adicionar_animal_cv, self).form_valid(form)                     
 
 
 def deletar_animal(request, pk):
@@ -63,6 +87,15 @@ def deletar_animal(request, pk):
         cursor.execute("DELETE FROM Animal_animal WHERE id=%s", [pk])
     return redirect('animal:listar')
 
+class deletar_animal_dv(DeleteView):
+    # Indicar o nome do produto que quer ser deletado
+    model = Animal
+    # Indicar o template que será utilizado
+    template_name = "Animal/confirmar_deletar_dv.html"
+    # Página para redirecionamento
+    success_url = reverse_lazy('animal:listar_lv')
+
+    # Nome do objeto no template será "object"
 
 def editar_animal(request, pk):
     if request.method == 'POST':
@@ -96,3 +129,11 @@ def editar_animal(request, pk):
     return render(request, 'Funcionario/editar.html',
                 {'form': form}
                 )
+class editar_animal_uv(UpdateView):
+    # Indicar o nome do produto que quer ser editado
+    model = Animal
+    fields = ['nome_animal', 'idade_animal', 'tipo_animal', 'peso_animal', 'obs', 'baia']
+    # Indicar o template que será utilizado
+    template_name = "Animal/editar_uv.html"
+    # Página para redirecionamento
+    success_url = reverse_lazy('animal:listar_lv')

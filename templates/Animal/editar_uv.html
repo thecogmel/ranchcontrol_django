@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Editar Funcionários
+{% endblock %}
+
+{% block titulo_pagina %}
+Editar
+{% endblock %}
+
+{% block conteudo %}
+  <div class="w-50 formulario">
+    <form method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" class="btn btn-primary" value="Atualizar">
+    </form>
+  </div>
+
+{% endblock %}

@@ -72,19 +72,19 @@
 
   <main class="container mt-5">
     <h3>
-      Listar Funcionários LV
+      Listar Animais LV
     </h3>
     
     {% if object_list  %}
     <ul class="list-group div35">
-      {% for funcionario in object_list  %}
+      {% for animal in object_list  %}
       <li class="list-group-item">
-        <strong>{{funcionario.id}}: {{ funcionario.nome }} - {{ funcionario.funcao }}</strong>
+        <strong>{{animal.id}}: {{ animal.nome_animal }} - {{ animal.tipo_animal }}</strong>
         <span class="span">
-          <a href="{% url 'funcionario:editar_uv' pk=funcionario.id %}" class="mx-2" style="text-decoration:none; text-align: end;">
+          <a href="{% url 'animal:editar_uv' pk=animal.id %}" class="mx-2" style="text-decoration:none; text-align: end;">
             <i class="fas fa-pencil" style="color:#F2BE24"></i>
           </a>
-          <a href="{% url 'funcionario:deletar_dv' pk=funcionario.id %}" class="mx-2" style="text-decoration:none; text-align: end;">
+          <a href="{% url 'animal:deletar_dv' pk=animal.id %}" class="mx-2" style="text-decoration:none; text-align: end;">
             <i class="fas fa-trash" style="color: var(--main-red)"></i>
           </a>
         </span>
@@ -92,7 +92,7 @@
       {% endfor %}
     </ul>
   {% else %}
-  <p>Não há funcionarios cadastrados.</p>
+  <p>Não há animais cadastrados.</p>
   {% endif %}
    
   </main>
